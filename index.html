@@ -15,11 +15,13 @@
         }
         canvas {
             border: 1px solid black;
+            max-width: 100%;
+            max-height: 100%;
         }
     </style>
 </head>
 <body>
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <canvas id="gameCanvas"></canvas>
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
@@ -31,9 +33,18 @@
         let gameInterval;
         let foodInterval;
         let gameStarted = false;
-        let speed = 200;
+        let speed = 300; // 降低初始移动速度为 300 毫秒
         let touchStartX;
         let touchStartY;
+
+        // 根据屏幕大小调整 canvas 尺寸
+        function adjustCanvasSize() {
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            const size = Math.min(screenWidth, screenHeight);
+            canvas.width = size;
+            canvas.height = size;
+        }
 
         // 生成随机食物的位置和类型
         function generateFood() {
@@ -187,15 +198,15 @@
                 const dy = touchCurrentY - touchStartY;
 
                 if (Math.abs(dx) > Math.abs(dy)) {
-                    if (dx > 0 && direction!== 'left') {
+                    if (dx > 0 && direction!=='left') {
                         direction = 'right';
-                    } else if (dx < 0 && direction!== 'right') {
+                    } else if (dx < 0 && direction!=='right') {
                         direction = 'left';
                     }
                 } else {
-                    if (dy > 0 && direction!== 'up') {
+                    if (dy > 0 && direction!=='up') {
                         direction = 'down';
-                    } else if (dy < 0 && direction!== 'down') {
+                    } else if (dy < 0 && direction!=='down') {
                         direction = 'up';
                     }
                 }
@@ -210,16 +221,16 @@
             if (gameStarted) {
                 switch (event.key) {
                     case 'ArrowUp':
-                        if (direction!== 'down') direction = 'up';
+                        if (direction!=='down') direction = 'up';
                         break;
                     case 'ArrowDown':
-                        if (direction!== 'up') direction = 'down';
+                        if (direction!=='up') direction = 'down';
                         break;
                     case 'ArrowLeft':
-                        if (direction!== 'right') direction = 'left';
+                        if (direction!=='right') direction = 'left';
                         break;
                     case 'ArrowRight':
-                        if (direction!== 'left') direction = 'right';
+                        if (direction!=='left') direction = 'right';
                         break;
                 }
             }
@@ -246,7 +257,7 @@
             direction = 'right';
             food = [];
             score = 1;
-            speed = 200;
+            speed = 300; // 重置速度为 300 毫秒
             gameStarted = false;
             startGame();
         }
@@ -261,10 +272,11 @@
 
         // 调整速度函数
         function adjustSpeed() {
-            speed = Math.max(50, 200 - score * 10);
+            speed = Math.max(50, 300 - score * 10); // 调整速度计算，初始速度为 300 毫秒
         }
 
         // 首次渲染
+        adjustCanvasSize(); // 调整 canvas 大小
         render();
     </script>
 </body>
