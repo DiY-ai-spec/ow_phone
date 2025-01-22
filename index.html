@@ -25,7 +25,7 @@
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
-        const gridSize = 20;
+        const gridSize = 10; // 将 gridSize 减半，使元素变小
         let snake = [{ x: 10, y: 10 }];
         let direction = 'right';
         let food = [];
@@ -33,7 +33,7 @@
         let gameInterval;
         let foodInterval;
         let gameStarted = false;
-        let speed = 300; // 降低初始移动速度为 300 毫秒
+        let speed = 300;
         let touchStartX;
         let touchStartY;
 
@@ -257,7 +257,7 @@
             direction = 'right';
             food = [];
             score = 1;
-            speed = 300; // 重置速度为 300 毫秒
+            speed = 300;
             gameStarted = false;
             startGame();
         }
@@ -272,11 +272,11 @@
 
         // 调整速度函数
         function adjustSpeed() {
-            speed = Math.max(50, 300 - score * 10); // 调整速度计算，初始速度为 300 毫秒
+            speed = Math.max(50, 300 - score * 10);
         }
 
         // 首次渲染
-        adjustCanvasSize(); // 调整 canvas 大小
+        adjustCanvasSize();
         render();
     </script>
 </body>
